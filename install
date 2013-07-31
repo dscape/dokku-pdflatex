@@ -1,4 +1,11 @@
 #!/bin/bash
+APP="$1"
+IMAGE="app/$APP"
 
-apt-get update
-apt-get install texlive-full
+if [[ "$APP" -eq "pdflatex" ]]; then
+  $id=$(docker run -i -a stdin app/$IMAGE /bin/bash -c "apt-get update && apt-get install texlive-full")
+  test $(docker wait $id) -eq 0
+  docker commit $id $IMAGE > /dev/null
+
+  echo "pdflatex installed"
+fi
