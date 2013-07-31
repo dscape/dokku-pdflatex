@@ -3,7 +3,7 @@ APP="$1"
 IMAGE="app/$APP"
 
 if [[ "$APP" -eq "pdflatex" ]]; then
-  $id=$(docker run -i -a stdin app/$IMAGE /bin/bash -c "apt-get update && apt-get install texlive-full")
+  $id=$(docker run -i -a stdin app/$IMAGE /bin/bash -c "apt-get update && apt-get install -y texlive-full")
   test $(docker wait $id) -eq 0
   docker commit $id $IMAGE > /dev/null
 
